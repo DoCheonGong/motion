@@ -1,0 +1,151 @@
+@charset "UTF-8";
+@import "reset";
+
+main {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #333;
+
+    section {
+        h2 {
+            opacity: 0;
+        }
+
+        article {
+            position: fixed;
+            width: 26vw;
+            height: 80vh;
+            background-color: #fff;
+            top: 50%;
+            left: 50%;
+            margin-top: -40vh;
+            margin-left: -13vw;
+            z-index: 1;
+            overflow: hidden;
+
+            // transition: all 1s;
+            transition-property: width, height, transform, opacity, margin-top, margin-left, top, left;
+            transition-duration: 1s;
+            /*
+                all을 사용하면 모든 CSS 속성에 대해서 transition을
+                적용할 수 있지만 성능상 부담을 초래한다
+                필요한 요소 뿐 아니라 불필요한 요소도 상태 변화가 있을 때마다
+                transition을 발생하므로 성능 저하가 일어날 수 있다
+
+                특히 크기, 위치 등 자주 변하는 속성들에 성능 저하
+                문제가 더 심하게 일어난다
+
+                필요한 속성들에 대해서만 명시적으로 지정해준다
+                (정교한 제어 및 성능 문제 해결)
+            */
+            transition-duration: 0.5s;
+            transition-delay: 0s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .open {
+                cursor: pointer;
+                // 공통적인 요소로
+                margin-top: 1000px;
+                opacity: 0;
+                // transition: opacity 0.5s, margin-top 0.5s;
+                // transition-property: opacity, margin-top;
+                // transition-duration: 0.5s;
+                transition: all 0.5s;
+            }
+
+            .close {
+                cursor: pointer;
+                position: absolute;
+                top: 10vh;
+                right: -10vw;
+                opacity: 0;
+                transition: all 0.5s;
+            }
+
+            /*
+                nth-of-type VS data-index
+                nth-of-type: 이미 정해져 있는 index에서
+                순환하기 때문에 순서 개입이 어렵다
+                data-index: 정확한 li 스타일을 고정할 수 있으므로
+                개발자의 의도가 개입이 자유롭다
+            */
+            &:nth-of-type(1) {
+                transform: translate(-400%, 200%);
+                opacity: 0;
+            }
+
+            &:nth-of-type(2) {
+                transform: translate(-130%, 40%);
+                opacity: 0.8;
+            }
+
+            &:nth-of-type(3) {
+                transform: translate(0%, 0%);
+                // 이동 지점을 정하기 위해 transform 부여
+                opacity: 1;
+
+                .open {
+                    margin-top: 0;
+                    opacity: 1;
+                }
+            }
+
+            &:nth-of-type(4) {
+                transform: translate(130%, -40%);
+                opacity: 0.8;
+            }
+
+            &:nth-of-type(5) {
+                transform: translate(400%, -200%);
+                opacity: 0;
+            }
+        }
+
+        article.on {
+            width: 100%;
+            height: 100%;
+            margin-top: 0;
+            margin-left: 0;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            transition-duration: 0.8s;
+            transition-delay: 0.5s;
+
+            .open {
+                margin-top: 1000px;
+                opacity: 0;
+            }
+
+            .close {
+                top: 10vh;
+                right: 10vw;
+                opacity: 1;
+                transition: 0.5s 1s; // 0.5s에 0을 빼서 .5s 로 사용 가능
+                transition-timing-function: cubic-bezier(.48, -0.67, .54, 1.68);
+            }
+        }
+
+        article.hide {
+            margin-top: -1000px;
+            opacity: 0;
+            transition-delay: 0s;
+        }
+    }
+
+    nav {
+        position: absolute;
+        bottom: 10vh;
+        right: 10vw;
+        display: flex;
+        gap: 30px;
+
+        p {
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+}
