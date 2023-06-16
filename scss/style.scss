@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import "reset";
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
 
 main {
     position: relative;
@@ -8,52 +9,135 @@ main {
     background-color: #333;
 
     section {
-        h2 {
+        h1 {
             opacity: 0;
         }
 
         article {
             position: fixed;
             width: 26vw;
-            height: 80vh;
+            height: 70vh;
             background-color: #fff;
             top: 50%;
             left: 50%;
-            margin-top: -40vh;
-            margin-left: -13vw;
+            margin-top: -25vh;
+            margin-left: -12vw;
             z-index: 1;
             overflow: hidden;
-
-            // transition: all 1s;
             transition-property: width, height, transform, opacity, margin-top, margin-left, top, left;
             transition-duration: 1s;
-            /*
-                all을 사용하면 모든 CSS 속성에 대해서 transition을
-                적용할 수 있지만 성능상 부담을 초래한다
-                필요한 요소 뿐 아니라 불필요한 요소도 상태 변화가 있을 때마다
-                transition을 발생하므로 성능 저하가 일어날 수 있다
-
-                특히 크기, 위치 등 자주 변하는 속성들에 성능 저하
-                문제가 더 심하게 일어난다
-
-                필요한 속성들에 대해서만 명시적으로 지정해준다
-                (정교한 제어 및 성능 문제 해결)
-            */
             transition-duration: 0.5s;
             transition-delay: 0s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+
+            .txt {
+                width: 100%;
+                height: 40%;
+                background-color: #222;
+                padding: 20px;
+                padding-top: 30px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: 0.5s;
+
+                strong {
+                    font: bold 14px/1 "Arial";
+                    color: #ddd;
+                }
+
+                p {
+                    font: 14px/1.2 "Arial";
+                    color: #888;
+                }
+
+                i {
+                    font-size: 20px;
+                    color: #888;
+                    position: absolute;
+                    top: 40px;
+                    right: 40px;
+                }
+
+                h2 {
+                    font: 5vw/1 "crimson text";
+                    color: #fff;
+                    position: absolute;
+                    bottom: -3vw;
+                    left: 20px;
+                    z-index: 2;
+                    transition: 0.5s;
+                    text-shadow: 5px 5px 3px rgba(0, 0, 0, 0.2);
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        width: 0%;
+                        height: 1px;
+                        background-color: #fff;
+                        top: -10px;
+                        left: 0;
+                        transition: width 1s 0.5s;
+                    }
+                }
+
+                .desc {
+                    width: 60%;
+                    opacity: 0;
+                    position: absolute;
+                    top: 60%;
+                    left: 5vw;
+                    transition: 0.5s;
+                    font: 16px/1.3 "Arial";
+                    color: #888;
+                }
+            }
+
+            .pic {
+                width: 100%;
+                height: 65%;
+                background-color: #000;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                transition: 0.5s;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    opacity: 0.5;
+                    transition: opacity 0.5s;
+                }
+            }
 
             .open {
-                cursor: pointer;
-                // 공통적인 요소로
-                margin-top: 1000px;
-                opacity: 0;
-                // transition: opacity 0.5s, margin-top 0.5s;
-                // transition-property: opacity, margin-top;
-                // transition-duration: 0.5s;
-                transition: all 0.5s;
+                width: 0%;
+                height: 60px;
+                background-color: #fff;
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                overflow: hidden;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: 0.5s;
+
+                span {
+                    font: 16px/1 "crimson text";
+                    color: #000;
+                    transform: translateX(-200px);
+                    opacity: 0;
+                    transition: 0.5s;
+                }
+
+                i {
+                    margin-right: -100px;
+                    opacity: 0;
+                    color: #555;
+                    transition: 0.5s;
+                }
             }
 
             .close {
@@ -65,13 +149,6 @@ main {
                 transition: all 0.5s;
             }
 
-            /*
-                nth-of-type VS data-index
-                nth-of-type: 이미 정해져 있는 index에서
-                순환하기 때문에 순서 개입이 어렵다
-                data-index: 정확한 li 스타일을 고정할 수 있으므로
-                개발자의 의도가 개입이 자유롭다
-            */
             &:nth-of-type(1) {
                 transform: translate(-400%, 200%);
                 opacity: 0;
@@ -84,12 +161,30 @@ main {
 
             &:nth-of-type(3) {
                 transform: translate(0%, 0%);
-                // 이동 지점을 정하기 위해 transform 부여
                 opacity: 1;
 
-                .open {
-                    margin-top: 0;
+                .txt h2::before {
+                    width: 4vw;
+                }
+
+                .pic img {
                     opacity: 1;
+                }
+
+                .open {
+                    width: 100%;
+
+                    span {
+                        opacity: 1;
+                        transform: translateX(20px);
+                        transition: 0.5s 0.3s;
+                    }
+
+                    i {
+                        opacity: 1;
+                        margin-right: 30px;
+                        transition: 0.5s 0.4s;
+                    }
                 }
             }
 
@@ -114,6 +209,10 @@ main {
             z-index: 2;
             transition-duration: 0.8s;
             transition-delay: 0.5s;
+
+            .txt {
+                width: 60%;
+            }
 
             .open {
                 margin-top: 1000px;
@@ -141,11 +240,113 @@ main {
         bottom: 10vh;
         right: 10vw;
         display: flex;
-        gap: 30px;
+        gap: 50px;
+        transition: 0.5s;
+
+        &:hover {
+            gap: 80px;
+        }
+
+        &::before {
+            position: absolute;
+            content: "";
+            height: 150%;
+            width: 1px;
+            background-color: #fff;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) rotate(-60deg);
+        }
 
         p {
+            width: 100px;
+            height: 40px;
+            position: relative;
             color: #fff;
             cursor: pointer;
+
+            span {
+                font: italic 12px/1 "Arial";
+                color: #fff;
+                transition: 0.5s;
+            }
+
+            &::before {
+                content: "";
+                position: absolute;
+                width: 0px;
+                height: 1px;
+                background-color: #fff;
+                top: 50%;
+                opacity: 0;
+                transition: 0.2s 0.2s;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                width: 0px;
+                height: 1px;
+                background-color: #fff;
+                top: 50%;
+                opacity: 0;
+                transition: 0.2s 0s;
+                transform: rotate(60deg);
+            }
+
+            &.prev {
+                text-align: right;
+
+                span {
+                    transform: translateY(20px);
+                }
+
+                &::before {
+                    right: 0;
+                }
+
+                &::after {
+                    transform-origin: left center;
+                    transform: rotate(30deg);
+                    left: 0;
+                }
+            }
+
+            &.next {
+                text-align: left;
+
+                span {
+                    transform: translateY(-5px);
+                }
+
+                &::before {
+                    left: 0;
+                }
+
+                &::after {
+                    transform-origin: right center;
+                    transform: rotate(30deg);
+                    right: 0;
+                }
+            }
+        }
+
+        p:hover {
+
+            &.next,
+            &.prev {
+                &::before {
+                    width: 100%;
+                    opacity: 1;
+                    transition: 0.2s;
+                }
+
+                &::after {
+                    width: 40px;
+                    opacity: 1;
+                    transition: 0.2s 0.2s;
+                }
+            }
         }
     }
 }
